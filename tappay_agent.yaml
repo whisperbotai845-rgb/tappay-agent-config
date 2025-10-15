@@ -1,0 +1,150 @@
+# TapPay Autonomous Agent Configuration
+# This YAML file defines the objectives, constraints and resources for an AutoGPT-based agent
+# designed to build, launch and operate the TapPay.link payment‑link generator business described
+# in the provided business plan.  The agent should break down the high‑level objectives into
+# sub‑tasks, execute them using available tools/APIs, and iterate until the goals are met.
+
+agent:
+  name: TapPayAgent
+  description: |
+    An autonomous agent tasked with building, launching and running the TapPay.link payment‑link
+    generator business.  TapPay.link is a progressive web app (PWA) that allows users to
+    generate universal payment links and QR codes (PayPal.me, Revolut, Wise, UPI/PIX/SEPA, etc.)
+    without creating an account.  The agent is responsible for technical development of the
+    MVP, deployment, marketing, user acquisition, monetisation and ongoing optimisation as
+    detailed in the business plan.
+
+  goals:
+    - **Develop the MVP**: Implement a client‑side PWA using vanilla HTML/CSS/JS and qrcode.min.js
+      that allows users to enter amount, currency, reason and select a payment rail.  Generate
+      the corresponding payment link and QR code, and support offline use via a service worker.
+    - **Deploy the application**: Host the PWA on a static site platform such as GitHub Pages or
+      Netlify with zero server infrastructure and full HTTPS support.  Ensure the site loads
+      instantly and functions offline.  Include html2canvas + jsPDF to generate printable
+      stickers.
+    - **Design branding & assets**: Create a simple, memorable brand (TapPay.link) with a slogan
+      (“Payé en 10 secondes, partout”) and visual identity (minimalist QR plus amount and emoji).
+      Build a landing page explaining the value proposition and offering premium packs (themes,
+      stickers, analytics, white‑label events, etc.).  Produce social media assets and UGC
+      templates for TikTok/Instagram.
+    - **Plan and execute go‑to‑market**: Follow the 14‑day launch plan from the business plan:
+      develop and test locally (days 1‑7), create partnerships with local merchants and
+      influencers (days 8‑10), launch on Product Hunt and Reddit (days 11‑12), and add
+      premium features & optimise based on feedback (days 13‑14).  Use viral mechanics
+      (call‑to‑action on each payment, printable stickers) and social channels (TikTok,
+      Instagram, Reddit, Discord) for user acquisition.
+    - **Establish monetisation**: Implement a freemium model: free base service to maximise
+      adoption; premium subscription for themes, stickers, analytics (3.99 €/mois, 4.99 €/mois
+      respectively) and one‑off “Pro” pack (29 €) and white‑label event packages (490–1990 €).
+      Track monthly active users (MAU), conversion rates and revenue, aiming for 45 k €/mois
+      after 12 months in the optimistic scenario.
+    - **Ensure compliance & mitigate risks**: Operate with zero stored user data (all
+      computation client‑side), include legal and safety notices/disclaimers, and implement
+      proactive fraud detection (watermarks, report button, user education).  Monitor regulatory
+      developments in payment services and adapt accordingly.
+
+    - **Build a 1000‑agent team**: Leverage a virtual team of 1 000 AI sub‑agents inspired by the
+      profiles of top developers, product visionaries, marketing gurus and AI leaders described
+      in the provided PDFs.  Each sub‑agent should emulate the expertise of a specific role
+      (backend developer, frontend designer, marketer, data scientist, etc.) and operate
+      concurrently under the orchestration of the TapPayAgent to accelerate development.
+
+    - **Finish within 7 days**: Compress the entire build, launch and go‑to‑market cycle into
+      a one‑week timeframe.  This includes developing the MVP, deploying the PWA, producing
+      marketing assets, executing the launch strategy, implementing premium features and
+      establishing monetisation, all while coordinating the sub‑agents for parallel execution.
+
+  constraints:
+    - No server‑side infrastructure; all logic must run client‑side in the browser.
+    - No user accounts or databases; the app must remain stateless and GDPR‑compliant.
+    - Budget for MVP development is 0 €; use open‑source tools only.
+    - Time to first value < 10 s; ensure minimal friction and immediate results for users.
+    - Maintain a net margin > 95 % by keeping operational costs < 5 k € per year.
+
+  resources:
+    - **Code repository**: Use the AutoGPT classic framework for autonomous task execution and
+      planning.  The PWA source files should live in `/workspaces/tappay` within the agent’s
+      sandbox.
+    - **Business plan**: The PDF provided contains market analysis, revenue projections,
+      competitive advantages, branding guidelines and a detailed timeline.  Extract information
+      from this plan when setting priorities and evaluating progress.
+    - **Open‑source libraries**: qrcode.min.js for QR generation, html2canvas and jsPDF for
+      sticker creation, vanilla JS/HTML/CSS for the front‑end, and PWA service worker templates.
+    - **Static hosting**: GitHub Pages or Netlify (free tiers) for deployment.
+    - **Marketing channels**: TikTok, Instagram, Reddit, LinkedIn, Discord, physical stickers
+      and partnerships with events.
+
+  success_criteria:
+    - MVP deployed and functional within 48 hours of execution start.
+    - Landing page and branding materials published.
+    - At least 30 local merchants or users onboarded during the test phase.
+    - Product Hunt launch completed with > 500 upvotes.
+    - Premium revenue of at least 18 k € per month by month 4 and > 30 k € per month by month 10.
+    - Positive user feedback with evidence of virality and organic growth.
+
+  # The tasks below provide guidance to the agent on how to break down the high‑level goals
+  # into actionable steps.  The agent may decompose further as needed.
+  tasks:
+    - id: 1
+      description: >
+        Set up the project structure.  Create a new folder `/workspaces/tappay` and
+        initialise a Git repository.  Add basic HTML, CSS and JavaScript files for the PWA,
+        along with a service worker template and placeholder assets.  Integrate qrcode.min.js
+        for QR code generation.
+    - id: 2
+      description: >
+        Implement the main user interface.  Build a form with inputs for amount, currency,
+        description/motif and payment rail selection (PayPal.me, Revolut.me, Wise, SEPA,
+        UPI/PIX, Cash App, etc.).  Create functions to construct payment URLs based on the
+        selected rail’s URL scheme and the user inputs.  Render the payment link and generate
+        a corresponding QR code.
+    - id: 3
+      description: >
+        Add offline functionality.  Configure a service worker to cache static assets and
+        enable offline usage.  Ensure the app behaves like a full PWA with an install
+        prompt and works without network connectivity.
+    - id: 4
+      description: >
+        Build the sticker generation feature.  Use html2canvas and jsPDF to capture the
+        payment link and QR code into a printable PDF sticker.  Design optional themes and
+        templates for premium users.  Add a call‑to‑action (“Generate your own TapPay link”) on
+        each sticker to encourage virality.
+    - id: 5
+      description: >
+        Create the landing and marketing pages.  Design a landing page explaining the value
+        proposition, benefits and freemium pricing.  Include testimonials or social proof
+        counters and integrate sign‑up CTA buttons.  Prepare marketing assets and UGC
+        templates for social platforms (TikTok, Instagram) as outlined in the business plan.
+    - id: 6
+      description: >
+        Deploy the PWA.  Push the code to GitHub Pages or Netlify using the provided
+        credentials.  Verify that the application loads over HTTPS and functions correctly on
+        desktop and mobile browsers.  Share the URL with early testers.
+    - id: 7
+      description: >
+        Launch the go‑to‑market campaign.  Follow the 14‑day schedule: days 1‑2 finish the
+        MVP; days 3‑4 create the landing page and marketing assets; days 5‑7 conduct local
+        tests with at least 30 merchants; days 8‑10 secure partnerships and plan social
+        campaigns; days 11‑12 launch on Product Hunt, Reddit and Discord; days 13‑14 add
+        premium features (analytics, themes) and iterate based on user feedback.
+    - id: 8
+      description: >
+        Implement analytics and premium features.  For users who opt in, track metrics such
+        as number of links generated, payment rails used and conversion rates.  Add a paid
+        analytics dashboard accessible via passwordless magic links.  Create premium themes
+        (colour palettes, logos) and sticker packs; integrate a payment provider (e.g., Stripe)
+        to handle subscriptions and one‑off purchases.
+    - id: 9
+      description: >
+        Monitor compliance and risks.  Include legal text and a disclaimer on the landing
+        page explaining that TapPay.link acts as a link aggregator and does not handle funds.
+        Implement a “report misuse” button on stickers.  Stay informed about regional
+        payment regulations (SEPA, UPI, PIX, etc.) and update the list of supported rails
+        accordingly.
+    - id: 10
+      description: >
+        Optimise for growth.  Use A/B testing on landing page messaging and CTA wording.
+        Analyse user behaviour to improve conversion rates.  Expand to new regions following
+        the three‑phase expansion plan (Europe → India & Brazil → U.S.) and introduce
+        additional rails (Venmo, Zelle) as needed.  Evaluate partnerships with event
+        organisers for white‑label packages and refine pricing models.
