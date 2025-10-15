@@ -1,0 +1,58 @@
+version: "3.9"
+
+# This compose file orchestrates the services required to run the TapPay
+# mega‑agent platform. It defines a Redis queue, a FastAPI controller
+# responsible for turning high‑level plans into queue entries, and a
+# worker service that spawns multiple concurrent workers to
+# process tasks. By default the services run on the same host, but
+# networking can be adjusted as needed.
+
+services:
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    # Expose the Redis port on the default network for other
+    # containers. Not exposed to the host by default to limit
+    # external access.
+    ports:
+      - "6379:6379"
+
+  controller:
+    # Uses a slim Python image and installs dependencies on start.
+    image: python:3.11-slim
+    working_dir: /app
+    environment:
+      - REDIS_URL=${REDIS_URL}
+      - GITHUB_REPO_CONFIG=${GITHUB_REPO_CONFIG}
+      - CONTROLLER_PORT=${CONTROLLER_PORT}
+    volumes:
+      - ./runtime:/app
+    command: >-
+      bash -lc "pip install --no-cache-dir fastapi uvicorn redis pyyaml httpx && \
+      uvicorn controller:app --host 0.0.0.0 --port ${CONTROLLER_PORT:-8080}"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis
+
+  workers:
+    # A single service is defined but scaled via the `deploy.replicas`
+    # directive to run multiple processes. Each process will spawn
+    # multiple threads to handle concurrent tasks.
+    image: python:3.11-slim
+    working_dir: /app
+    environment:
+      - REDIS_URL=${REDIS_URL}
+      - GITHUB_REPO_CONFIG=${GITHUB_REPO_CONFIG}
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+      - SENDGRID_API_KEY=${SENDGRID_API_KEY}
+    volumes:
+      - ./runtime:/app
+    command: >-
+      bash -lc "pip install --no-cache-dir redis pyyaml httpx && \
+      python worker.py --concurrency 200"
+    depends_on:
+      - redis
+      - controller
+    deploy:
+      replicas: 1
